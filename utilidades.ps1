@@ -1,9 +1,9 @@
 ﻿# Si este es tu primer escript, abre un powershell como admin y escribe : 'Set-ExecutionPolicy Bypass'
 # Autor : https://github.com/rdev32
-$Host.UI.RawUI.WindowTitle = "Utilidades Arcanas";
-$run = $false;
+$Host.UI.RawUI.WindowTitle = "Utilidades para Windows 10 Home/Pro Edition";
+$running = $true;
 if ([bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")) {
-    while (!$run) {
+    while ($running) {
         Clear-Host;
         Write-Host "Opciones";
         Write-Host "1 - Activar Windows 10 Home/Pro";
@@ -32,19 +32,19 @@ if ([bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -m
         if ($cmd -eq "2") {
             Clear-Host;
             Write-Host "Eliminando Objetos 3D...";
-            $DAT = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}';
-            $INF = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}';
-            if (Test-Path $DAT) {
+            $DATA = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}';
+            $INFO = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}';
+            if (Test-Path $DATA) {
                 if (Test-Path $INF) {
-                    Remove-Item $DAT;
-                    Remove-Item $INF;
+                    Remove-Item $DATA;
+                    Remove-Item $INFO;
                     Write-Host "Se elimino con exito.";
                 }
             } else {
-                Write-Host "Ya habias borrado esto antes?";
+                Write-Host "Error: el objeto no existe, ya habias borrado esto antes?";
                 Read-Host -Prompt "Presiona cualquier tecla para volver al menu";
             }
         }
-        if ($cmd -eq "3") { $run = $true; }
+        if ($cmd -eq "3") { $running = $false; }
     }
 } else { Write-Host "Debes ejecutar esto con permisos de administrador." }
